@@ -1,10 +1,10 @@
-package com.stos.concert;
+package com.stos.concert.ticket;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ConcertReservationApplicationTests {
+class TicketServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

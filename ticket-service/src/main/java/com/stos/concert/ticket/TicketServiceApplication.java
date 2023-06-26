@@ -1,13 +1,13 @@
-package com.stos.concert;
+package com.stos.concert.ticket;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ConcertReservationApplication {
+public class TicketServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ConcertReservationApplication.class, args);
+		SpringApplication.run(TicketServiceApplication.class, args);
 	}
 
 }
