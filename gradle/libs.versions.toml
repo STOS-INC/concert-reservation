@@ -1,0 +1,18 @@
+[versions]
+spring-boot = '3.1.0'
+spring-cloud = '2022.0.3'
+spring-dependency = '1.1.0'
+springdoc = '2.1.0'
+
+[libraries]
+spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-dependencies', version.ref = 'spring-boot' }
+spring-boot-configuration-processor = { module = 'org.springframework.boot:spring-boot-configuration-processor', version.ref = 'spring-boot' }
+spring-cloud-dependencies = { module = 'org.springframework.cloud:spring-cloud-dependencies', version.ref = 'spring-cloud' }
+springdoc-openapi-starter-common = { module = 'org.springdoc:springdoc-openapi-starter-common', version.ref = 'springdoc' }
+springdoc-openapi-starter-webmvc-ui = { module = 'org.springdoc:springdoc-openapi-starter-webmvc-ui', version.ref = 'springdoc' }
+springdoc-openapi-starter-webmvc-api = { module = 'org.springdoc:springdoc-openapi-starter-webmvc-api', version.ref = 'springdoc' }
+
+[plugins]
+spring-boot = { id = 'org.springframework.boot', version.ref = 'spring-boot' }
+spring-dependency-management = { id = 'io.spring.dependency-management', version.ref = 'spring-dependency' }
+freefair-lombok = { id = 'io.freefair.lombok', version = '8.0.1' }

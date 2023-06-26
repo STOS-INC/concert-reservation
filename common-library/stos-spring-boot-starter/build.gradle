@@ -1,0 +1,6 @@
+dependencies {
+    project.parent
+            .subprojects
+            .findAll { project.name != it.name }
+            .forEach { api(it) }
+}

@@ -1,25 +1,34 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.1.0'
-	id 'io.spring.dependency-management' version '1.1.0'
+    id 'base'
+    id 'java'
+    alias(libs.plugins.spring.boot) apply false
+    alias(libs.plugins.spring.dependency.management) apply false
+    alias(libs.plugins.freefair.lombok) apply false
 }
 
-group = 'com.stos'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+allprojects {
+    group = 'com.stos.concert'
+    sourceCompatibility = '17'
 
-repositories {
-	mavenCentral()
+    repositories {
+        mavenCentral()
+    }
 }
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
-	testImplementation 'org.testcontainers:junit-jupiter'
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'io.freefair.lombok'
+
+    dependencies {
+        implementation libs.spring.boot.dependencies
+        implementation libs.spring.cloud.dependencies
+        if (project.name.endsWith('-service')) {
+            implementation libs.springdoc.openapi.starter.webmvc.ui
+        }
+    }
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
+apply plugin: 'java'
