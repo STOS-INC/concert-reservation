@@ -7,12 +7,14 @@ assignees: ''
 
 ---
 
-## module
+## dependency module
+ticket
+hall
+reservation
+common
 
-- [ ] ticket
-- [ ] hall
-- [ ] reservation
-- [ ] common
+## task
+- [ ] task1
 
 ## description
 
