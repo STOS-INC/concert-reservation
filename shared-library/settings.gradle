@@ -1,0 +1,4 @@
+rootProject.name = 'shared-library'
+
+include 'stos-spring-boot-starter'
+include 'stos-context'

@@ -6,29 +6,28 @@ plugins {
     alias(libs.plugins.freefair.lombok) apply false
 }
 
-allprojects {
-    group = 'com.stos.concert'
-    sourceCompatibility = '17'
-
-    repositories {
-        mavenCentral()
-    }
+repositories {
+    mavenCentral()
 }
 
 subprojects {
+    group = 'com.stos.concert'
+    sourceCompatibility = '17'
     apply plugin: 'java-library'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
     apply plugin: 'io.freefair.lombok'
 
     dependencies {
-        implementation libs.spring.boot.dependencies
-        implementation libs.spring.cloud.dependencies
+        implementation platform(libs.spring.boot.dependencies)
         if (project.name.endsWith('-service')) {
-            implementation libs.springdoc.openapi.starter.webmvc.ui
+            implementation platform(libs.spring.cloud.dependencies)
+            implementation platform(libs.springdoc.openapi.starter.webmvc.ui)
+            implementation project(':shared-library:stos-spring-boot-starter')
         }
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
     }
     tasks.named('test') {
         useJUnitPlatform()
     }
 }
-
-apply plugin: 'java'
