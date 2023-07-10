@@ -1,4 +1,4 @@
-package com.stos.concert.reservation;
+package com.stos.concert.reservation.infrastructure.entity;
 
 import jakarta.persistence.Embeddable;
 
