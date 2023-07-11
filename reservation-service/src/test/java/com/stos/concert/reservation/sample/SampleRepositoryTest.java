@@ -1,6 +1,7 @@
 package com.stos.concert.reservation.sample;
 
-import org.junit.jupiter.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -22,6 +23,6 @@ public class SampleRepositoryTest {
 
     SampleEntity res = sampleRepository.findById(1L).orElseThrow();
 
-    Assertions.assertEquals("TEST 1", res.getName());
+    assertThat("TEST 1").isEqualTo(res.getName());
   }
 }
