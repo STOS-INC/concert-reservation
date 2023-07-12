@@ -18,6 +18,11 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'io.freefair.lombok'
 
+    dependencyManagement {
+        imports {
+            mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+        }
+    }
     dependencies {
         implementation platform(libs.spring.boot.dependencies)
         if (project.name.endsWith('-service')) {
