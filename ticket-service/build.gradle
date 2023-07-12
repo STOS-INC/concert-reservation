@@ -12,7 +12,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     implementation 'org.springframework.boot:spring-boot-docker-compose'
-    implementation project(':shared-library:stos-spring-boot-starter')
     runtimeOnly 'com.mysql:mysql-connector-j'
     testImplementation 'org.testcontainers:mysql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
