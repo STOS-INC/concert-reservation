@@ -2,6 +2,10 @@ rootProject.name = 'concert-reservation'
 
 include 'reservation-service'
 include 'ticket-service'
+include 'hall-service'
 
-include 'common-library'
-include 'common-library:stos-spring-boot-starter'
+include 'shared-library'
+include 'shared-library:stos-spring-boot-starter'
+include 'shared-library:stos-context'
+include 'shared-library:stos-spring-boot-autoconfigure'
+
