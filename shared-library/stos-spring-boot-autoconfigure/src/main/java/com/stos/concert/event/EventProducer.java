@@ -1,11 +1,11 @@
 package com.stos.concert.event;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Component;
 
+@AutoConfiguration
 @RequiredArgsConstructor
-@Component
 public class EventProducer {
 
   private final KafkaTemplate<String, String> kafkaTemplate;
