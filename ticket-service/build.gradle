@@ -18,7 +18,6 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'org.testcontainers:junit-jupiter'
 
-    implementation project(':shared-library:stos-spring-boot-autoconfigure')
     implementation 'org.springframework.kafka:spring-kafka'
 }
 
