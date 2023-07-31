@@ -1,6 +1,7 @@
 package com.stos.concert.concert.infrastructure.persistence.redis.repository;
 
 import static java.util.Objects.*;
+import static org.apache.commons.lang3.BooleanUtils.*;
 
 import java.time.Duration;
 
@@ -37,7 +38,10 @@ public class ScheduledSeatReservationRedisRepository implements ScheduledSeatRes
 	@Override
 	public void cancel(Long seatId) {
 		log.debug("[{}] >> cancel reservation [{}]", this.getClass(), seatId);
-		redisTemplate.delete(typeKey(seatId));
+		final var deleted = redisTemplate.delete(typeKey(seatId));
+		if (isFalse(deleted)) {
+			log.error("[{}] >> failed cancel reservation [{}]", this.getClass(), seatId);
+		}
 	}
 
 	@Override
