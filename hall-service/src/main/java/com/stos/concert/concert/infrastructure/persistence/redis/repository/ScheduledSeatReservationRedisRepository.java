@@ -14,7 +14,9 @@ import com.stos.concert.shared.support.redis.RedisKeyType;
 
 import jakarta.persistence.PersistenceException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Repository
 public class ScheduledSeatReservationRedisRepository implements ScheduledSeatReservationRepository {
@@ -23,6 +25,7 @@ public class ScheduledSeatReservationRedisRepository implements ScheduledSeatRes
 
 	@Override
 	public boolean reserve(ScheduledSeatReservationEntity dto) {
+		log.debug("[{}] >> reserve [{}]", this.getClass(), dto.getSeatId());
 		final var operation = redisTemplate.opsForValue();
 		final var done = operation.setIfAbsent(typeKey(dto.getSeatId()), dto, Duration.ofMinutes(EXPIRE_TIME_MINUTES));
 		if (isNull(done)) {
@@ -33,6 +36,7 @@ public class ScheduledSeatReservationRedisRepository implements ScheduledSeatRes
 
 	@Override
 	public void cancel(Long seatId) {
+		log.debug("[{}] >> cancel reservation [{}]", this.getClass(), seatId);
 		redisTemplate.delete(typeKey(seatId));
 	}
 
