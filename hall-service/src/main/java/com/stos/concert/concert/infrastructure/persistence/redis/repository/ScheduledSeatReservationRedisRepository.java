@@ -26,7 +26,7 @@ public class ScheduledSeatReservationRedisRepository implements ScheduledSeatRes
 
 	@Override
 	public boolean reserve(ScheduledSeatReservationEntity dto) {
-		log.debug("[{}] >> reserve [{}]", this.getClass(), dto.getSeatId());
+		log.debug("## reserve [{}]", dto.getSeatId());
 		final var operation = redisTemplate.opsForValue();
 		final var done = operation.setIfAbsent(typeKey(dto.getSeatId()), dto, Duration.ofMinutes(EXPIRE_TIME_MINUTES));
 		if (isNull(done)) {
@@ -37,10 +37,10 @@ public class ScheduledSeatReservationRedisRepository implements ScheduledSeatRes
 
 	@Override
 	public void cancel(Long seatId) {
-		log.debug("[{}] >> cancel reservation [{}]", this.getClass(), seatId);
+		log.debug("## cancel reservation [{}]", seatId);
 		final var deleted = redisTemplate.delete(typeKey(seatId));
 		if (isFalse(deleted)) {
-			log.error("[{}] >> failed cancel reservation [{}]", this.getClass(), seatId);
+			log.error("## failed cancel reservation [{}]", seatId);
 		}
 	}
 
