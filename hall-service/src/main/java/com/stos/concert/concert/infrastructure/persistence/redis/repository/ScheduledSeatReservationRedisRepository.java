@@ -1,6 +1,7 @@
 package com.stos.concert.concert.infrastructure.persistence.redis.repository;
 
 import static java.util.Objects.*;
+import static org.apache.commons.lang3.BooleanUtils.*;
 
 import java.time.Duration;
 
@@ -14,7 +15,9 @@ import com.stos.concert.shared.support.redis.RedisKeyType;
 
 import jakarta.persistence.PersistenceException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Repository
 public class ScheduledSeatReservationRedisRepository implements ScheduledSeatReservationRepository {
@@ -23,6 +26,7 @@ public class ScheduledSeatReservationRedisRepository implements ScheduledSeatRes
 
 	@Override
 	public boolean reserve(ScheduledSeatReservationEntity dto) {
+		log.debug("## reserve [{}]", dto.getSeatId());
 		final var operation = redisTemplate.opsForValue();
 		final var done = operation.setIfAbsent(typeKey(dto.getSeatId()), dto, Duration.ofMinutes(EXPIRE_TIME_MINUTES));
 		if (isNull(done)) {
@@ -33,7 +37,11 @@ public class ScheduledSeatReservationRedisRepository implements ScheduledSeatRes
 
 	@Override
 	public void cancel(Long seatId) {
-		redisTemplate.delete(typeKey(seatId));
+		log.debug("## cancel reservation [{}]", seatId);
+		final var deleted = redisTemplate.delete(typeKey(seatId));
+		if (isFalse(deleted)) {
+			log.error("## failed cancel reservation [{}]", seatId);
+		}
 	}
 
 	@Override
