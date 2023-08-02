@@ -13,8 +13,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.stos.concert.concert.exception.ScheduledSeatConfirmedConflictException;
 import com.stos.concert.concert.exception.ScheduledSeatNotFoundException;
-import com.stos.concert.concert.exception.ScheduledSeatReservedConflictException;
 import com.stos.concert.concert.exception.ScheduledSeatReservingConflictException;
 import com.stos.concert.concert.infrastructure.persistence.jpa.entity.ScheduledSeatEntityFixture;
 import com.stos.concert.concert.infrastructure.persistence.jpa.repository.ScheduledSeatRepository;
@@ -67,7 +67,7 @@ public class ScheduledSeatServiceImplTest {
 	}
 
 	@Test
-	void reserve_shouldBeThrowScheduledSeatReservedConflictException_whenSeatIdIsAlreadyReserved() {
+	void reserve_shouldBeThrowScheduledSeatConfirmedConflictException_whenSeatIdIsAlreadyReserved() {
 		// given : 이미 예약된 좌석 데이터가 주어질 경우
 		final var entity = ScheduledSeatEntityFixture.INSTANCE.reservedEntity();
 		final var seatId = entity.getId();
@@ -79,7 +79,7 @@ public class ScheduledSeatServiceImplTest {
 		});
 
 		// then : ScheduledSeatNotFoundException 이 발생한다
-		assertThat(actual).isInstanceOf(ScheduledSeatReservedConflictException.class);
+		assertThat(actual).isInstanceOf(ScheduledSeatConfirmedConflictException.class);
 	}
 
 	@Test

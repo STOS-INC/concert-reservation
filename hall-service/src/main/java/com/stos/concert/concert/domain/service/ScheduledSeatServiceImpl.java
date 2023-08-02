@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.stos.concert.concert.domain.dto.ScheduledSeatDto;
 import com.stos.concert.concert.domain.mapper.ScheduledSeatMapper;
+import com.stos.concert.concert.exception.ScheduledSeatConfirmedConflictException;
 import com.stos.concert.concert.exception.ScheduledSeatNotFoundException;
-import com.stos.concert.concert.exception.ScheduledSeatReservedConflictException;
 import com.stos.concert.concert.exception.ScheduledSeatReservingConflictException;
 import com.stos.concert.concert.infrastructure.persistence.jpa.repository.ScheduledSeatRepository;
 import com.stos.concert.concert.infrastructure.persistence.redis.dto.ScheduledSeatReservationEntity;
@@ -31,7 +31,7 @@ public class ScheduledSeatServiceImpl implements ScheduledSeatService {
 
 	/**
 	 * @exception ScheduledSeatNotFoundException invalid seat id or data not found
-	 * @exception ScheduledSeatReservedConflictException seat already reserved (이미 예약 확정된 좌석)
+	 * @exception ScheduledSeatConfirmedConflictException seat already confirmed (이미 예약 확정된 좌석)
 	 * @exception ScheduledSeatReservingConflictException seat already reserving (이미 예약중인 좌석)
 	 */
 	@Override
@@ -40,8 +40,8 @@ public class ScheduledSeatServiceImpl implements ScheduledSeatService {
 			.map(entity -> ScheduledSeatMapper.toDto(entity))
 			.orElseThrow(ScheduledSeatNotFoundException::new);
 		if (seat.cannotReserve()) {
-			throw new ScheduledSeatReservedConflictException(
-				"scheduled seat is already reserved : [" + seat.getSeatId() + "]");
+			throw new ScheduledSeatConfirmedConflictException(
+				"scheduled seat is already confirmed : [" + seat.getSeatId() + "]");
 		}
 		seat.reserving();
 		final var done = reservationRepository.reserve(

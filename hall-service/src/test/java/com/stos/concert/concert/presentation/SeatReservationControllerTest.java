@@ -14,8 +14,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.stos.concert.concert.application.CancelSeatReservationUsecase;
 import com.stos.concert.concert.application.ReserveSeatUsecase;
 import com.stos.concert.concert.domain.dto.ScheduledSeatDtoFixture;
+import com.stos.concert.concert.exception.ScheduledSeatConfirmedConflictException;
 import com.stos.concert.concert.exception.ScheduledSeatNotFoundException;
-import com.stos.concert.concert.exception.ScheduledSeatReservedConflictException;
 import com.stos.concert.concert.exception.ScheduledSeatReservingConflictException;
 import com.stos.concert.exception.ExceptionHandlingAutoConfiguration;
 
@@ -64,7 +64,7 @@ public class SeatReservationControllerTest {
 		final var response = ScheduledSeatDtoFixture.INSTANCE.dto();
 		final var seatId = response.getSeatId();
 		final var command = new ReserveSeatUsecase.ReserveSeatCommand(seatId);
-		doThrow(new ScheduledSeatReservedConflictException("already reserved")).when(reserveSeatUsecase)
+		doThrow(new ScheduledSeatConfirmedConflictException("already confirmed")).when(reserveSeatUsecase)
 			.reserve(command);
 
 		// when
