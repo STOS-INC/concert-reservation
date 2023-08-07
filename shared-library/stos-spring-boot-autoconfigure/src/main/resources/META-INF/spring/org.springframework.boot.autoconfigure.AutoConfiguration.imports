@@ -1,1 +1,2 @@
 com.stos.concert.exception.ExceptionHandlingAutoConfiguration
+com.stos.concert.event.EventAutoConfiguration
