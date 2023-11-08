@@ -1,6 +1,6 @@
 package com.stos.concert.event;
 
-import com.stos.concert.shared.Event.Payload;
+import com.stos.concert.shared.Event.DomainEvent;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -17,13 +17,13 @@ import org.springframework.messaging.support.MessageBuilder;
 @RequiredArgsConstructor
 public class EventProducer {
 
-  private final KafkaTemplate<String, Message<Payload>> kafkaTemplate;
+  private final KafkaTemplate<String, Message<DomainEvent>> kafkaTemplate;
 
   public EventProducer() {
     this.kafkaTemplate = new KafkaTemplate<>(producerFactory());
   }
 
-  private ProducerFactory<String, Message<Payload>> producerFactory() {
+  private ProducerFactory<String, Message<DomainEvent>> producerFactory() {
     Map<String, Object> config = new HashMap<>();
     config.put("bootstrap.servers", "localhost:9092");
     config.put("key.serializer", StringSerializer.class);
@@ -31,9 +31,9 @@ public class EventProducer {
     return new DefaultKafkaProducerFactory<>(config);
   }
 
-  public void publish(String topic, Payload payload) {
+  public void publish(String topic, DomainEvent domainEvent) {
     kafkaTemplate.send(topic, MessageBuilder
-        .withPayload(payload)
+        .withPayload(domainEvent)
         .build());
   }
 }
